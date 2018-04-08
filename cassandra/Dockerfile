@@ -36,10 +36,11 @@ ADD src/start.sh /usr/local/bin/start
 RUN rm -f /etc/security/limits.d/cassandra.conf
 
 #install graphite support
-COPY src/graphite.yaml /etc/cassandra/
-RUN echo "JVM_OPTS=\"\$JVM_OPTS -Dcassandra.metricsReporterConfigFile=graphite.yaml\"" \
-    >> /etc/cassandra/cassandra-env.sh
+COPY src/graphite.yaml /etc/cassandra/conf/
+RUN echo "JVM_OPTS=\"\$JVM_OPTS -Dcassandra.metricsReporterConfigFile=/etc/cassandra/conf/graphite.yaml\"" \
+   >> /etc/cassandra/conf/cassandra-env.sh
 COPY metrics-graphite-2.2.0.jar /usr/share/cassandra/lib/
+RUN chmod +x /usr/share/cassandra/lib/metrics-graphite-2.2.0.jar && chown cassandra:cassandra /usr/share/cassandra/lib/metrics-graphite-2.2.0.jar && chmod +x /etc/cassandra/conf/graphite.yaml && chown cassandra:cassandra /etc/cassandra/conf/graphite.yaml
 
 EXPOSE 7199 7000 7001 9160 9042
 EXPOSE 22 8012 61621

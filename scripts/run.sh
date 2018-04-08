@@ -5,6 +5,7 @@ cd $(dirname $0)
 HOW_MANY=${1}
 PREFIX=${2-cass}
 IMAGE=${3-adbadb/cassandra12-lx}
+NET=monitoring-network
 
 if [[ ${#@} = 0 ]]; then
   echo Runs multiple Cassandra containers
