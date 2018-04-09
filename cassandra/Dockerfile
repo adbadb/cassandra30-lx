@@ -11,7 +11,7 @@ ADD src/datastax.repo /etc/yum.repos.d/datastax.repo
 # Install Java, Install packages (sshd + supervisord + monitoring tools + cassandra)
 RUN yum install -y wget tar openssh-server openssh-clients supervisor sysstat sudo which openssl hostname
 RUN yum install -y java-1.8.0-openjdk-headless
-RUN yum install -y cassandra12
+RUN yum install -y cassandra
 RUN yum clean all
 
 # Configure SSH server
@@ -39,8 +39,8 @@ RUN rm -f /etc/security/limits.d/cassandra.conf
 COPY src/graphite.yaml /etc/cassandra/conf/
 RUN echo "JVM_OPTS=\"\$JVM_OPTS -Dcassandra.metricsReporterConfigFile=/etc/cassandra/conf/graphite.yaml\"" \
    >> /etc/cassandra/conf/cassandra-env.sh
-COPY metrics-graphite-2.2.0.jar /usr/share/cassandra/lib/
-RUN chmod +x /usr/share/cassandra/lib/metrics-graphite-2.2.0.jar && chown cassandra:cassandra /usr/share/cassandra/lib/metrics-graphite-2.2.0.jar && chmod +x /etc/cassandra/conf/graphite.yaml && chown cassandra:cassandra /etc/cassandra/conf/graphite.yaml
+COPY metrics-graphite-3.1.0.jar /usr/share/cassandra/lib/
+RUN chmod +x /usr/share/cassandra/lib/metrics-graphite-3.1.0.jar && chown cassandra:cassandra /usr/share/cassandra/lib/metrics-graphite-3.1.0.jar && chmod +x /etc/cassandra/conf/graphite.yaml && chown cassandra:cassandra /etc/cassandra/conf/graphite.yaml
 
 EXPOSE 7199 7000 7001 9160 9042
 EXPOSE 22 8012 61621
