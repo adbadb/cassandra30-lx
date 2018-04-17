@@ -5,7 +5,7 @@ cd $(dirname $0)
 HOW_MANY=${1}
 PREFIX=${2-cass}
 IMAGE=${3-adbadb/cassandra30-lx}
-NET=monitoring-network
+NET=cass-network
 
 if [[ ${#@} = 0 ]]; then
   echo Runs multiple Cassandra containers
@@ -17,9 +17,9 @@ if [[ ${#@} = 0 ]]; then
   exit 1
 fi
 
-docker run -d --name ${PREFIX}1 $IMAGE
+docker run -d --net ${NET} --name ${PREFIX}1 $IMAGE
 SEED=${PREFIX}1
 
 for (( instance=$HOW_MANY; $instance > 1; instance=$instance - 1 )); do
-	docker run -d --name ${PREFIX}${instance} --link $SEED:seed $IMAGE start seed
+	docker run -d --net ${NET} --name ${PREFIX}${instance} --link $SEED:seed $IMAGE start seed
 done
