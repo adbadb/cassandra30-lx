@@ -13,4 +13,4 @@ if [ -z "$CONTAINER" ]; then
 	exit 1
 fi
 
-docker run -it --rm --net container:"$CONTAINER" adbadb/cassandra12-lx nodetool $@
+docker run -it --rm --net container:"$CONTAINER" adbadb/cassandra30-lx nodetool $@
