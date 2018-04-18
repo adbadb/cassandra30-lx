@@ -2,7 +2,7 @@ graphite:
 -
   period: 60
   timeunit: 'SECONDS'
-  prefix: 'Node1'
+  prefix: Cassandra
   hosts:
   - host: 'graphite'
     port: 2003
